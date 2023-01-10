@@ -10,13 +10,38 @@ describe Application do
   # class so our tests work.
   let(:app) { Application.new }
 
-  context 'GET /albums' do 
-    it 'should return the list of albums' do
-      response = get('/albums')
-      expected_response = 'Surfer Rosa, Waterloo, Super Trouper, Bossanova, Lover, Folklore, I Put a Spell on You, Baltimore, Here Comes the Sun, Fodder on My Wings, Ring Ring'
+  context 'GET /' do 
+    it 'returns html hello message with the given name' do 
+      response = get('/', name: 'Mike')
 
+      expect(response.body).to include('<h1>Hello Mike </h1>')
+      
+    end
+  end 
+
+  context 'GET /albums' do 
+    it 'should return the list of albums in html format' do
+      response = get('/albums')
+      # expected_response = 'Surfer Rosa, Waterloo, Super Trouper, Bossanova, Lover, Folklore, I Put a Spell on You, Baltimore, Here Comes the Sun, Fodder on My Wings, Ring Ring'
+      
       expect(response.status).to eq(200)
-      expect(response.body).to eq(expected_response)
+      expect(response.body).to include('<a href="/albums/2">Get more information</a>')
+      expect(response.body).to include('<a href="/albums/3">Get more information</a>')
+      expect(response.body).to include('<a href="/albums/4">Get more information</a>')
+      # expect(response.body).to include('<h1>Albums</h1>')
+      # expect(response.body).to include('Title: Surfer Rosa')
+      # expect(response.body).to include('Released: 1988')
+    end
+  end
+
+  context 'GET /albums/:id' do 
+    it 'should return info about album 2' do
+      response = get('/albums/2')
+      
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<h1>Surfer Rosa</h1>')
+      expect(response.body).to include('Release year: 1988')
+      expect(response.body).to include('Artist: Pixies')
     end
   end
 
@@ -40,10 +65,10 @@ describe Application do
   context "GET /artists" do
     it 'returns 200 OK' do
       response = get('/artists')
-      expected_response = 'Pixies, ABBA, Taylor Swift, Nina Simone, Kiasmos'
+      # expected_response = 'Pixies, ABBA, Taylor Swift, Nina Simone, Kiasmos'
 
       expect(response.status).to eq(200)
-      expect(response.body).to eq(expected_response)
+      expect(response.body).to include('Pixies')
     end
   end
 
@@ -62,4 +87,14 @@ describe Application do
 
     end
   end
+
+  context 'GET /artists/:id' do 
+    it 'shows artist by id' do 
+      response = get('/artists/1')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<h1>Info</h1>')
+    end
+  end
+
 end
