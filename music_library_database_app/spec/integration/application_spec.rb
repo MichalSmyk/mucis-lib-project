@@ -45,6 +45,18 @@ describe Application do
     end
   end
 
+  context 'GET /albums/new' do 
+    it 'should return the form to add a new album' do 
+      response = get('/albums/new')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<form method="POST" action="/albums">')
+      expect(response.body).to include('<input type="text" name="title" />')
+      expect(response.body).to include('<input type="text" name="release_year" />')
+      expect(response.body).to include('<input type="text" name="artist_id" />')
+
+    end
+  end
   context 'POST /albums' do
     it ' should create a new album' do 
       response = post(
@@ -59,6 +71,28 @@ describe Application do
       response = get('/albums')
 
       expect(response.body).to include('OK Computer')
+    end
+
+    it 'should validate album parameters' do
+      response = post(
+        '/albums',
+        invalid_artist_title: 'Ok Computer',
+        another_invalid_thing: 123
+      )
+
+      expect(response.status).to eq(400)
+    end
+  end
+
+
+  context 'GET /artists/new' do 
+    it 'should return form to add new artist' do 
+      response = get('/artists/new')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<form method="POST" action="/artists">')
+      expect(response.body).to include('<input type="text" name="name" />')
+      expect(response.body).to include('<input type="text" name="genre" />')
     end
   end
 
@@ -96,5 +130,7 @@ describe Application do
       expect(response.body).to include('<h1>Info</h1>')
     end
   end
+
+  
 
 end
