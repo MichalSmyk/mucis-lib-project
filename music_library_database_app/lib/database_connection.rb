@@ -14,7 +14,7 @@ class DatabaseConnection
     # If the environment variable (set by Render)
     # is present, use this to open the connection.
     if ENV['DATABASE_URL'] != nil
-      @connection = PG.connect(ENV['DATABASE_URL'])
+      @connection = PG.connect(ENV['postgres://my_app_database_frsb_user:ijgzncQM4FstSC4K6oFfzK2SNO4HK6wK@dpg-cevddm02i3mntl1ef6rg-a/my_app_database_frsb'])
       return
     end
   
