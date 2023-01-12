@@ -43,6 +43,16 @@ class Application < Sinatra::Base
     return erb(:album)
   end  
 
+
+  get '/artists' do 
+    repo = ArtistRepository.new
+    @artists = repo.all
+    p "Artists #{@artists}"
+
+    return erb(:artists)
+  end
+
+
   get '/artists/new' do 
     return erb(:new_artist)
   end
@@ -54,14 +64,6 @@ class Application < Sinatra::Base
     p "Artist #{@artist}"
    
     return erb(:artist_id)
-  end
-
-  get '/artists' do 
-    repo = ArtistRepository.new
-    @artists = repo.all
-    p "Artists #{@artists}"
-
-    return erb(:artists)
   end
 
 
