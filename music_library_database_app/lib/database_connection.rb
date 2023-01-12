@@ -23,7 +23,7 @@ class DatabaseConnection
     else
       database_name = 'music_library'
     end
-    @connection = PG.connect({ host: '127.0.0.1', dbname: database_name })
+    @connection = PG.connect({ host: 'postgres://my_app_database_9hpi_user:pepwxXT3wNp7QDGU6Nv597a2eCyXBQhd@dpg-cevf7q9gp3jjsh3ivsdg-a/my_app_database_9hpi', dbname: database_name })
   end
   # This method executes an SQL query 
   # on the database, providing some optional parameters
