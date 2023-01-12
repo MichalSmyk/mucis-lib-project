@@ -48,16 +48,18 @@ class Application < Sinatra::Base
   end
 
   get '/artists/:id' do 
+      p 'Id executed'
     repo = ArtistRepository.new
     @artist = repo.find(params[:id])
-
+    p "Artist #{@artist}"
+   
     return erb(:artist_id)
   end
 
   get '/artists' do 
     repo = ArtistRepository.new
     @artists = repo.all
-
+    p "Artists #{@artists}"
 
     return erb(:artists)
   end
